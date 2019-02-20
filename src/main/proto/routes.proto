@@ -1,0 +1,14 @@
+option java_package = "biz.cits.service.proto.routes";
+
+service Ping {
+  rpc ReplyPing (PingRequest) returns (PingReply) {}
+  rpc ReplyPingAgain (PingRequest) returns (PingReply) {}
+}
+
+message PingRequest {
+  string shout = 1;
+}
+
+message PingReply {
+  string status = 1;
+}

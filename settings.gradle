@@ -1,0 +1,10 @@
+rootProject.name = 'grpc-micro'
+
+pluginManagement {
+    repositories {
+        maven { // The google mirror is less flaky than mavenCentral()
+            url "https://maven-central.storage-download.googleapis.com/repos/central/data/"
+        }
+        gradlePluginPortal()
+    }
+}
