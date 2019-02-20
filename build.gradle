@@ -1,12 +1,15 @@
 plugins {
     id 'application'
     id 'com.google.protobuf' version '0.8.5'
+    id 'idea'
 }
 
 group 'biz.cits.micro'
 version '1.0-SNAPSHOT'
 
-sourceCompatibility = 1.8
+sourceCompatibility = 1.11
+targetCompatibility = 1.11
+
 def grpcVersion = '1.18.0'
 def protobufVersion = '3.6.1'
 def protocVersion = protobufVersion
@@ -30,12 +33,7 @@ dependencies {
     testImplementation "org.mockito:mockito-core:1.9.5"
 }
 
-task routeGuideServer(type: CreateStartScripts) {
-    mainClassName = 'io.grpc.examples.routeguide.RouteGuideServer'
-    applicationName = 'route-guide-server'
-    outputDir = new File(project.buildDir, 'tmp')
-    classpath = startScripts.classpath
-}
+startScripts.enabled = false
 
 protobuf {
     protoc { artifact = "com.google.protobuf:protoc:${protocVersion}" }
@@ -47,19 +45,25 @@ protobuf {
     }
 }
 
-protoc { artifact = "com.google.protobuf:protoc:${protocVersion}" }
-plugins {
-    grpc { artifact = "io.grpc:protoc-gen-grpc-java:${grpcVersion}" }
-}
-generateProtoTasks {
-    all()*.plugins { grpc {} }
-}
-
 sourceSets {
     main {
+        proto {
+            srcDir 'src/main/proto'
+        }
         java {
-            srcDirs 'build/generated/source/proto/main/grpc'
-            srcDirs 'build/generated/source/proto/main/java'
+            srcDir 'build/generated/source/proto/main/java'
         }
     }
+    test {
+        proto {
+            srcDir 'src/test/protocolbuffers'
+        }
+    }
+}
+
+task routeGuideServer(type: CreateStartScripts) {
+    mainClassName = 'biz.cits.service.RouteServer'
+    applicationName = 'routes-server'
+    outputDir = new File(project.buildDir, 'tmp')
+    classpath = startScripts.classpath
 }

@@ -1,4 +1,10 @@
+
+syntax = "proto3";
+package routes;
+
+option java_outer_classname = "RoutesProto";
 option java_package = "biz.cits.service.proto.routes";
+option java_multiple_files = true;
 
 service Ping {
   rpc ReplyPing (PingRequest) returns (PingReply) {}
