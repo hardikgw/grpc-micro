@@ -2,6 +2,8 @@ package biz.cits.service;
 
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
+import io.grpc.stub.StreamObserver;
+
 import java.io.IOException;
 import java.util.logging.Logger;
 
@@ -45,6 +47,12 @@ public class PingServer {
         server.blockUntilShutdown();
     }
 
-    static class GreeterImpl extends PingGrpc.PingImplBase {
+    static class GreeterImpl extends PingServiceGrpc.PingServiceImplBase {
+        @Override
+        public void whatsUp(PingRequest req, StreamObserver<PingReply> responseObserver) {
+            PingReply reply = PingReply.newBuilder().setStatus("Hello " + req.getShout()).build();
+            responseObserver.onNext(reply);
+            responseObserver.onCompleted();
+        }
     }
 }

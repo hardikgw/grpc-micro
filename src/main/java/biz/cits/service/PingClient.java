@@ -12,7 +12,7 @@ public class PingClient {
     private static final Logger logger = Logger.getLogger(PingClient.class.getName());
 
     private final ManagedChannel channel;
-    private final PingGrpc.PingBlockingStub blockingStub;
+    private final PingServiceGrpc.PingServiceBlockingStub blockingStub;
 
     public PingClient(String host, int port) {
         this(ManagedChannelBuilder.forAddress(host, port)
@@ -24,7 +24,7 @@ public class PingClient {
 
     PingClient(ManagedChannel channel) {
         this.channel = channel;
-        blockingStub = PingGrpc.newBlockingStub(channel);
+        blockingStub = PingServiceGrpc.newBlockingStub(channel);
     }
 
     public void shutdown() throws InterruptedException {
@@ -36,7 +36,7 @@ public class PingClient {
         PingRequest request = PingRequest.newBuilder().setShout(name).build();
         PingReply response;
         try {
-            response = blockingStub.replyPing(request);
+            response = blockingStub.whatsUp(request);
         } catch (StatusRuntimeException e) {
             logger.log(Level.WARNING, "RPC failed: {0}", e.getStatus());
             return;
@@ -47,11 +47,11 @@ public class PingClient {
     public static void main(String[] args) throws Exception {
         PingClient client = new PingClient("localhost", 50051);
         try {
-            String user = "world";
+            String shout = "world";
             if (args.length > 0) {
-                user = args[0];
+                shout = args[0];
             }
-            client.greet(user);
+            client.greet(shout);
         } finally {
             client.shutdown();
         }
