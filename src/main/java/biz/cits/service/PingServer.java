@@ -50,7 +50,7 @@ public class PingServer {
     static class GreeterImpl extends PingServiceGrpc.PingServiceImplBase {
         @Override
         public void whatsUp(PingRequest req, StreamObserver<PingReply> responseObserver) {
-            PingReply reply = PingReply.newBuilder().setStatus("Hello " + req.getShout()).build();
+            PingReply reply = PingReply.newBuilder().setStatus("Status Of Shout " + req.getShout()).build();
             responseObserver.onNext(reply);
             responseObserver.onCompleted();
         }

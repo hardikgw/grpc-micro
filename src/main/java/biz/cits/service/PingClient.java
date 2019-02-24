@@ -41,13 +41,13 @@ public class PingClient {
             logger.log(Level.WARNING, "RPC failed: {0}", e.getStatus());
             return;
         }
-        logger.info("Greeting: " + response.getStatus());
+        logger.info("PingRequest: " + response.getStatus());
     }
 
     public static void main(String[] args) throws Exception {
         PingClient client = new PingClient("localhost", 50051);
         try {
-            String shout = "world";
+            String shout = "Ok";
             if (args.length > 0) {
                 shout = args[0];
             }
