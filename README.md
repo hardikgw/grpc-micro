@@ -1,0 +1,6 @@
+# gRPC + Spring Boot
+
+## Simple example for:
+ 1. gRPC in Spring Boot apppllication (Separate Port)
+ 2. TODO: gRPC + Spring Boot (Same Port)
+ 3. TODO: gRPC proxy with Spring Controller
