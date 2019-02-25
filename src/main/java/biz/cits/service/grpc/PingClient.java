@@ -1,5 +1,8 @@
-package biz.cits.service;
+package biz.cits.service.grpc;
 
+import biz.cits.service.PingReply;
+import biz.cits.service.PingRequest;
+import biz.cits.service.PingServiceGrpc;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.StatusRuntimeException;
@@ -14,7 +17,7 @@ public class PingClient {
     private final ManagedChannel channel;
     private final PingServiceGrpc.PingServiceBlockingStub blockingStub;
 
-    public PingClient(String host, int port) {
+    private PingClient(String host, int port) {
         this(ManagedChannelBuilder.forAddress(host, port)
                 // Channels are secure by default (via SSL/TLS). For the example we disable TLS to avoid
                 // needing certificates.

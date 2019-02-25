@@ -1,16 +1,20 @@
-package biz.cits.service;
+package biz.cits.service.grpc;
 
+import biz.cits.service.PingReply;
+import biz.cits.service.PingRequest;
+import biz.cits.service.PingServiceGrpc;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
 import io.grpc.stub.StreamObserver;
+import org.springframework.boot.ApplicationArguments;
+import org.springframework.boot.ApplicationRunner;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.logging.Logger;
 
-/**
- * Server that manages startup/shutdown of a {@code Greeter} server.
- */
-public class PingServer {
+@Component
+public class PingServer implements ApplicationRunner {
     private static final Logger logger = Logger.getLogger(PingServer.class.getName());
 
     private Server server;
@@ -45,6 +49,11 @@ public class PingServer {
         final PingServer server = new PingServer();
         server.start();
         server.blockUntilShutdown();
+    }
+
+    @Override
+    public void run(ApplicationArguments args) throws Exception {
+        start();
     }
 
     static class GreeterImpl extends PingServiceGrpc.PingServiceImplBase {
