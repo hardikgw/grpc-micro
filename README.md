@@ -9,4 +9,3 @@
 1. git clone (...)
 2. generate gRPC stubs ($gradle installDist)
 3. run app ($gradle bootRun)
-
