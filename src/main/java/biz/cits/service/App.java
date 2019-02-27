@@ -5,6 +5,7 @@ import io.grpc.ManagedChannelBuilder;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.converter.protobuf.ProtobufJsonFormatHttpMessageConverter;
 
 
 @SpringBootApplication
@@ -25,5 +26,10 @@ public class App {
                 .build();
     }
 
+
+    @Bean
+    public ProtobufJsonFormatHttpMessageConverter protobufJsonFormatHttpMessageConverter() {
+        return new ProtobufJsonFormatHttpMessageConverter();
+    }
 
 }
