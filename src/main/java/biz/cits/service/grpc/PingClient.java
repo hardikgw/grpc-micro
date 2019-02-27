@@ -25,16 +25,16 @@ public class PingClient {
                 .build());
     }
 
-    PingClient(ManagedChannel channel) {
+    private PingClient(ManagedChannel channel) {
         this.channel = channel;
         blockingStub = PingServiceGrpc.newBlockingStub(channel);
     }
 
-    public void shutdown() throws InterruptedException {
+    private void shutdown() throws InterruptedException {
         channel.shutdown().awaitTermination(5, TimeUnit.SECONDS);
     }
 
-    public void greet(String name) {
+    private void greet(String name) {
         logger.info("Will try to greet " + name + " ...");
         PingRequest request = PingRequest.newBuilder().setShout(name).build();
         PingReply response;
