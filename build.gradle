@@ -22,7 +22,6 @@ group 'biz.cits.micro'
 version '1.0-SNAPSHOT'
 
 bootJar {
-    baseName = 'grpc-micro'
     version = '0.1.0'
 }
 
@@ -72,7 +71,7 @@ sourceSets {
             srcDir 'src/main/proto'
         }
         java {
-            srcDir 'build/generated/source/proto/main/grpc'
+            srcDir 'src/main/java'
             srcDir 'build/generated/source/proto/main/java'
         }
     }
@@ -83,16 +82,16 @@ sourceSets {
     }
 }
 
-task routesServer(type: CreateStartScripts) {
-    mainClassName = 'biz.cits.service.RoutesServer'
-    applicationName = 'routes-server'
-    outputDir = new File(project.buildDir, 'tmp')
+task pingServer(type: CreateStartScripts) {
+    mainClassName = 'biz.cits.service.PingServer'
+    applicationName = 'ping-server'
+    outputDir = new File(project.projectDir, 'src/main/proto')
     classpath = startScripts.classpath
 }
 
-task routesClient(type: CreateStartScripts) {
-    mainClassName = 'biz.cits.service.RoutesClient'
-    applicationName = 'routes-client'
-    outputDir = new File(project.buildDir, 'tmp')
+task pingClient(type: CreateStartScripts) {
+    mainClassName = 'biz.cits.service.PingClient'
+    applicationName = 'ping-client'
+    outputDir = new File(project.projectDir, 'src/main/proto')
     classpath = startScripts.classpath
 }

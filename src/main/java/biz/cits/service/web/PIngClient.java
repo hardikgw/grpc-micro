@@ -20,15 +20,13 @@ public class PIngClient {
     @Autowired
     ProtobufJsonFormatHttpMessageConverter protobufJsonFormatHttpMessageConverter;
 
-
     @GetMapping("/ping")
     @ResponseBody
     public String gRpcPing() throws InvalidProtocolBufferException {
         PingRequest request = PingRequest.newBuilder().setShout("Hi").build();
-        PingReply resp = blockingStub.whatsUp(request);
+        PingReply resp = blockingStub.getStatus(request);
         return JsonFormat.printer().print(resp);
+
     }
-
-
 
 }
