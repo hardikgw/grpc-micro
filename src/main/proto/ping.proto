@@ -1,0 +1,21 @@
+
+syntax = "proto3";
+
+package ping;
+
+option java_outer_classname = "PingProto";
+option java_package = "biz.cits.service";
+option java_multiple_files = true;
+option objc_class_prefix = "CIT";
+
+service PingService {
+  rpc GetStatus (PingRequest) returns (PingReply) {}
+}
+
+message PingRequest {
+  string shout = 1;
+}
+
+message PingReply {
+  string respond = 1;
+}

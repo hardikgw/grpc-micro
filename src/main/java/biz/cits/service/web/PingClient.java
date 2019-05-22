@@ -11,8 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-@Controller
-public class PIngClient {
+@Controller("/ping")
+public class PingClient {
 
     @Autowired
     PingServiceGrpc.PingServiceBlockingStub blockingStub;
@@ -20,13 +20,18 @@ public class PIngClient {
     @Autowired
     ProtobufJsonFormatHttpMessageConverter protobufJsonFormatHttpMessageConverter;
 
-    @GetMapping("/ping")
+    @GetMapping("/rpc")
     @ResponseBody
     public String gRpcPing() throws InvalidProtocolBufferException {
         PingRequest request = PingRequest.newBuilder().setShout("Hi").build();
         PingReply resp = blockingStub.getStatus(request);
         return JsonFormat.printer().print(resp);
+    }
 
+    @GetMapping("/rpc")
+    @ResponseBody
+    public String gRestPing() throws InvalidProtocolBufferException {
+        return "ok";
     }
 
 }
