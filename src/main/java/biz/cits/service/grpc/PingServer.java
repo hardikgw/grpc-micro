@@ -6,6 +6,7 @@ import biz.cits.service.PingServiceGrpc;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
 import io.grpc.stub.StreamObserver;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
@@ -19,13 +20,15 @@ public class PingServer implements ApplicationRunner {
 
     private Server server;
 
+    @Value("${grpc.server.port}")
+    private Integer grpcServerPort;
+
     private void start() throws IOException {
-        int port = 50051;
-        server = ServerBuilder.forPort(port)
+        server = ServerBuilder.forPort(grpcServerPort)
                 .addService(new GreeterImpl())
                 .build()
                 .start();
-        logger.info("Server started, listening on " + port);
+        logger.info("Server started, listening on " + grpcServerPort);
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             System.err.println("*** shutting down gRPC server since JVM is shutting down");
             PingServer.this.stop();

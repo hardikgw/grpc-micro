@@ -28,7 +28,7 @@ public class PingClient {
         return JsonFormat.printer().print(resp);
     }
 
-    @GetMapping("/rpc")
+    @GetMapping("/json")
     @ResponseBody
     public String gRestPing() throws InvalidProtocolBufferException {
         return "ok";
