@@ -9,7 +9,7 @@ buildscript {
 
 plugins {
     id 'application'
-    id 'com.google.protobuf' version '0.8.5'
+    id 'com.google.protobuf' version '0.8.8'
     id 'idea'
     id 'eclipse'
     id 'java'

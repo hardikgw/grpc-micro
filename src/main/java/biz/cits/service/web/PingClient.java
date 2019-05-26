@@ -6,12 +6,14 @@ import biz.cits.service.PingServiceGrpc;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.util.JsonFormat;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.converter.protobuf.ProtobufJsonFormatHttpMessageConverter;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.client.RestTemplate;
 
-@Controller("/ping")
+@Controller()
 public class PingClient {
 
     @Autowired
@@ -20,7 +22,14 @@ public class PingClient {
     @Autowired
     ProtobufJsonFormatHttpMessageConverter protobufJsonFormatHttpMessageConverter;
 
-    @GetMapping("/rpc")
+    @Value("${grpc.client.port}")
+    private Integer jsonClientPort;
+
+    @Value(("${json.client.host}"))
+    private String jsonClientHost;
+
+
+    @GetMapping("/grpc")
     @ResponseBody
     public String gRpcPing() throws InvalidProtocolBufferException {
         PingRequest request = PingRequest.newBuilder().setShout("Hi").build();
@@ -30,8 +39,23 @@ public class PingClient {
 
     @GetMapping("/json")
     @ResponseBody
-    public String gRestPing() throws InvalidProtocolBufferException {
+    public String gRestPing() {
         return "ok";
+    }
+
+    @GetMapping("/status")
+    @ResponseBody
+    public String getStatus() {
+        String hostname = System.getenv().getOrDefault("HOSTNAME", "Unknown");
+        return "ok " + hostname;
+    }
+
+    @GetMapping("/client")
+    @ResponseBody
+    public String getClientStatus() {
+        RestTemplate restTemplate = new RestTemplate();
+        String client_resp = restTemplate.getForObject("http://" + jsonClientHost + jsonClientPort + "/json", String.class);
+        return client_resp;
     }
 
 }

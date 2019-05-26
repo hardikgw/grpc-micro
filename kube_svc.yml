@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: servicea
+spec:
+  selector:
+    matchLabels:
+      run: servicea
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        run: servicea
+    spec:
+      containers:
+        - name: servicea
+          image: grpc-svc:v1
+          ports:
+            - containerPort: 8080
+            - containerPort: 50051

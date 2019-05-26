@@ -1,0 +1,11 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: servicea
+spec:
+  type: NodePort
+  ports:
+    - port: 8080
+      nodePort: 31080
+  selector:
+    name: serivcea

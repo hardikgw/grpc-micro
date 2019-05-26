@@ -1,3 +1,9 @@
 gradle installDist
 
 gradle bootRun
+
+kubectl -n kube-system get secret
+
+kubectl -n kube-system describe secret kubernetes-dashboard-token-cwkp8
+
+kubectl expose deployment servicea --type=LoadBalancer --port=8080 --target-port=8080

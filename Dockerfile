@@ -2,7 +2,7 @@ FROM gradle:jdk11 AS gradle-build
 USER root
 RUN mkdir /app
 ADD . /app/.
-RUN cd /app && gradle build
+RUN cd /app && gradle bootJar
 
 FROM openjdk:11-jre-slim
 WORKDIR /app
