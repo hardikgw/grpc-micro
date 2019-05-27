@@ -22,7 +22,7 @@ public class PingClient {
     @Autowired
     ProtobufJsonFormatHttpMessageConverter protobufJsonFormatHttpMessageConverter;
 
-    @Value("${grpc.client.port}")
+    @Value("${json.client.port}")
     private Integer jsonClientPort;
 
     @Value(("${json.client.host}"))
@@ -54,7 +54,7 @@ public class PingClient {
     @ResponseBody
     public String getClientStatus() {
         RestTemplate restTemplate = new RestTemplate();
-        String client_resp = restTemplate.getForObject("http://" + jsonClientHost + jsonClientPort + "/json", String.class);
+        String client_resp = restTemplate.getForObject("http://" + jsonClientHost + ':' + jsonClientPort + "/json", String.class);
         return client_resp;
     }
 
