@@ -48,9 +48,10 @@ public class PingClient {
     }
 
     @GetMapping("/json")
-    @ResponseBody
-    public String gRestPing(@RequestHeader HttpHeaders headers) {
-        return "ok";
+    public ResponseEntity<String> gRestPing(@RequestHeader HttpHeaders headers) {
+        return ResponseEntity.ok()
+                .headers(tracingHeaders(headers))
+                .body("ok");
     }
 
     @GetMapping("/status")
