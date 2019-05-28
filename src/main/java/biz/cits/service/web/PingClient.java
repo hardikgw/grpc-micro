@@ -33,9 +33,11 @@ public class PingClient {
     @Value("${json.client.port}")
     private Integer jsonClientPort;
 
-    @Value(("${json.client.host}"))
+    @Value("${json.client.host}")
     private String jsonClientHost;
 
+    @Value("${json.client.endpoint}")
+    private String jsonClientEndpoint;
 
     @GetMapping("/grpc")
     @ResponseBody
@@ -63,7 +65,7 @@ public class PingClient {
     public String getClientStatus(@RequestHeader HttpHeaders headers) {
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<String> response = restTemplate
-                .exchange("http://" + jsonClientHost + ':' + jsonClientPort + "/json", HttpMethod.GET, new HttpEntity<>(tracingHeaders(headers)), String.class);
+                .exchange("http://" + jsonClientHost + ':' + jsonClientPort + "/" + jsonClientEndpoint, HttpMethod.GET, new HttpEntity<>(tracingHeaders(headers)), String.class);
         return response.getBody();
     }
 
