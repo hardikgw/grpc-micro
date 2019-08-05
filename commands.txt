@@ -2,6 +2,8 @@ gradle installDist
 
 gradle bootRun
 
+docker build . -t grpc-svc
+docker commit grpc-svc grpc-svc:v1
 kubectl -n kube-system get secret
 
 kubectl -n kube-system describe secret kubernetes-dashboard-token-cwkp8
