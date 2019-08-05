@@ -1,9 +1,9 @@
 # gRPC example using Spring Boot
 
 ## Simple example for:
- 1. gRPC in Spring Boot apppllication (Separate Port)
- 2. TODO: gRPC + Spring Boot on same port
- 3. TODO: gRPC proxy with Spring Controller
+1. gRPC in Spring Boot apppllication (Separate Port)
+2. TODO: gRPC + Spring Boot on same port
+3. TODO: gRPC proxy with Spring Controller
  
 ## Steps to run :
 1. git clone (...)
