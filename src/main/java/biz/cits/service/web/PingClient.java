@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.concurrent.TimeUnit;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -39,6 +41,12 @@ public class PingClient {
     @Value("${json.client.endpoint}")
     private String jsonClientEndpoint;
 
+    @Value("${status.latency.seconds}")
+    private long statusLatencySeconds;
+
+    @Value("${client.latency.seconds}")
+    private long clientLatencySeconds;
+
     @GetMapping("/grpc")
     @ResponseBody
     public String gRpcPing() throws InvalidProtocolBufferException {
@@ -58,12 +66,21 @@ public class PingClient {
     @ResponseBody
     public String getStatus() {
         String hostname = System.getenv().getOrDefault("HOSTNAME", "Unknown");
+        try {
+            TimeUnit.SECONDS.sleep(statusLatencySeconds);
+        } catch (InterruptedException e) {
+
+        }
         return "ok " + hostname;
     }
 
     @GetMapping("/client")
     @ResponseBody
     public String getClientStatus(@RequestHeader HttpHeaders headers) {
+        try {
+            TimeUnit.SECONDS.sleep(clientLatencySeconds);
+        } catch (InterruptedException e) {
+        }
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<String> response = restTemplate
                 .exchange("http://" + jsonClientHost + ':' + jsonClientPort + "/" + jsonClientEndpoint, HttpMethod.GET, new HttpEntity<>(tracingHeaders(headers)), String.class);
