@@ -13,5 +13,5 @@
 ## Steps to build and tag docker image
 1. git clone (...)
 2. docker build . -t grpc-svc
-3. docker commit grpc-svc grpc-svc:v1
+3. docker tag grpc-svc grpc-svc:v1
 
